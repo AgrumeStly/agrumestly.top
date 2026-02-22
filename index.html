@@ -3,113 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgrumeStly 的网站</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Agrumestly | Digital Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body { 
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8c291, #e77f67);
-            color: #333;
+            background-color: #030712;
+            margin: 0;
+            overflow: hidden; /* 禁用原生滚动，由 main.js 接管 */
+        }
+
+        /* 全屏面板基础样式 */
+        .section {
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 20px 40px 20px;
-            background-color: rgba(255,255,255,0.1);
-        }
-
-        header h1 {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            color: #fdf6f0;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 40px 20px;
-            gap: 40px;
-            flex-wrap: wrap;
+            justify-content: center;
+            visibility: hidden; /* 默认隐藏，由 GSAP 控制显示 */
+            z-index: 10;
         }
 
-        .card {
-            background-color: rgba(255,255,255,0.85);
-            border-radius: 20px;
-            padding: 30px 40px;
-            text-align: center;
-            width: 250px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-        }
+        .active { visibility: visible; z-index: 20; }
 
-        .card:hover {
+        /* 炫酷的标题流光 */
+        .text-shine {
+            background: linear-gradient(110deg, #fff 45%, #3b82f6 50%, #fff 55%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position-x: -200%; } }
+
+        /* 玻璃拟态卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(255, 255, 255, 0.06);
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        /* 侧边小圆点导航 */
+        .dot-nav {
+            position: fixed;
+            right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .dot.active {
+            background: #3b82f6;
+            transform: scale(1.8);
+            box-shadow: 0 0 20px #3b82f6;
         }
 
-        .card p {
-            font-size: 1rem;
-            color: #555;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(0,0,0,0.1);
-            color: #fff;
-        }
-
-        @media (max-width: 600px) {
-            main {
-                flex-direction: column;
-            }
-        }
+        /* 隐藏滚动条 */
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body>
-    <header>
-        <h1>AgrumeStly.top</h1>
-        <p id="hitokoto">
-            <a href="#" id="hitokoto_text">:D 获取中...喵</a>
-        </p>
-    </header>
+<body class="text-slate-200">
 
-    <main>
-        <a class="card" href="https://blog.agrumestly.top" target="_blank">
-            <h2>📖 博客</h2>
-        </a>
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
+    </div>
 
-        <a class="card" href="https://maj.agrumestly.top" target="_blank">
-            <h2>🎴 日麻点数计算器</h2>
-        </a>
+    <nav class="fixed top-0 left-0 w-full z-[100] px-8 md:px-12 py-10 flex justify-between items-center">
+        <a href="www.agrumestly.top"><div class="text-2xl font-black tracking-tighter text-white">agrumestly<span class="text-blue-500">.top</span></div></a>
+        
+        <div class="flex items-center space-x-6 md:space-x-10">
+            <div class="flex items-center space-x-3 text-[10px] font-bold tracking-widest border-r border-white/10 pr-6 md:pr-10">
+                <button onclick="setLanguage('zh')" class="lang-btn opacity-100 hover:text-blue-500 transition">ZH</button>
+                <span class="opacity-20">/</span>
+                <button onclick="setLanguage('en')" class="lang-btn opacity-50 hover:text-blue-500 transition">EN</button>
+            </div>
+
+            <div class="hidden sm:flex items-center space-x-8 text-[10px] font-black tracking-[0.3em]">
+                <a href="https://blog.agrumestly.top" data-i18n="nav_blog" class="hover:text-blue-400 transition-colors uppercase">My Blog</a>
+                <a href="mailto:hello@agrumestly.top" data-i18n="nav_contact" class="border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dot-nav">
+        <div class="dot active" onclick="goToSection(0)"></div>
+        <div class="dot" onclick="goToSection(1)"></div>
+    </div>
+
+    <main id="view-wrapper">
+        
+        <section class="section active" id="sec-1">
+            <div class="text-center px-8">
+                <p data-i18n="hero_tag" class="text-blue-500 font-mono mb-6 tracking-[0.8em] text-[10px] uppercase">Initiating Interface</p>
+                <h1 data-i18n="hero_title" class="text-7xl md:text-[11rem] font-black leading-none mb-10 text-shine tracking-tighter uppercase">
+                    Hi<br>There.
+                </h1>
+                <p data-i18n="hero_desc" class="text-slate-500 max-w-md mx-auto text-sm tracking-widest leading-loose font-light">
+                    欢迎来到 Agrumestly 的极简空间。向下滚动解锁我的工程世界。
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="sec-2">
+            <div class="max-w-6xl mx-auto px-10 w-full">
+                <h2 data-i18n="proj_title" class="text-5xl md:text-7xl font-black text-white mb-16 tracking-tighter leading-tight">
+                    FEATURED<br><span class="text-blue-600">PROJECTS</span>
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                    <div class="glass-card p-10 md:p-14 rounded-[3rem]">
+                        <div class="text-blue-500 mb-6 font-mono text-[12px] tracking-widest">01 / Majcalc</div>
+                        <h3 data-i18n="proj_1_tag" class="text-3xl font-bold mb-6 text-white tracking-tight">Maj Calculator</h3>
+                        <p data-i18n="proj_1_desc" class="text-slate-400 mb-10 text-base font-light leading-relaxed"></p>
+                        <div class="h-[1px] w-12 bg-blue-500 mb-8"></div>
+                        <a href="maj.agrumestly.top" class="text-[10px] font-black tracking-[0.2em] text-white hover:text-blue-500 transition-colors uppercase">Explore ↗</a>
+                    </div>
+                    <div class="glass-card p-10 md:p-14 rounded-[3rem]">
+                        <div class="text-purple-500 mb-6 font-mono text-[12px] tracking-widest">02 / Music2Text</div>
+                        <h3 data-i18n="proj_2_tag" class="text-3xl font-bold mb-6 text-white tracking-tight">Project Neon</h3>
+                        <p data-i18n="proj_2_desc" class="text-slate-400 mb-10 text-base font-light leading-relaxed">在浏览器中运行的高性能实时光影渲染器。</p>
+                        <div class="h-[1px] w-12 bg-purple-500 mb-8"></div>
+                        <a href="m2t.agrumestly.top" class="text-[10px] font-black tracking-[0.2em] text-white hover:text-purple-500 transition-colors uppercase">Explore ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer>
-        © 2025 AgrumeStly. All rights reserved.
-    </footer>
-    <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
+    <div class="fixed bottom-10 left-10 z-[100] opacity-20 text-[8px] font-bold tracking-[0.5em] uppercase hidden md:block">
+        Agrumestly System v2.6.0
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="data/languages.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
