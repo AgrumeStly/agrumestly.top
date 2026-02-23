@@ -79,6 +79,20 @@
 
         /* 隐藏滚动条 */
         ::-webkit-scrollbar { display: none; }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="text-slate-200">
@@ -100,7 +114,12 @@
 
             <div class="hidden sm:flex items-center space-x-8 text-[10px] font-black tracking-[0.3em]">
                 <a href="https://blog.agrumestly.top" data-i18n="nav_blog" class="hover:text-blue-400 transition-colors uppercase">My Blog</a>
-                <a href="mailto:hello@agrumestly.top" data-i18n="nav_contact" class="border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all">CONTACT</a>
+                <a href="javascript:void(0)" 
+                onclick="goToSection(2)" 
+                data-i18n="nav_contact" 
+                class="border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all">
+                CONTACT
+                </a>
             </div>
         </div>
     </nav>
@@ -108,6 +127,7 @@
     <div class="dot-nav">
         <div class="dot active" onclick="goToSection(0)"></div>
         <div class="dot" onclick="goToSection(1)"></div>
+        <div class="dot" onclick="goToSection(2)"></div>
     </div>
 
     <main id="view-wrapper">
@@ -144,6 +164,46 @@
                         <div class="h-[1px] w-12 bg-purple-500 mb-8"></div>
                         <a href="https://m2t.agrumestly.top" class="text-[10px] font-black tracking-[0.2em] text-white hover:text-purple-500 transition-colors uppercase">Explore ↗</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section" id="sec-3">
+            <div class="max-w-6xl mx-auto px-10 w-full text-center md:text-left">
+                <h2 data-i18n="contact_title" class="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-tight uppercase">
+                    Get in<br><span class="text-blue-600">Touch</span>
+                </h2>
+                <p data-i18n="contact_subtitle" class="text-slate-500 mb-16 tracking-widest font-light">探索我的数字足迹，或者直接给我发邮件。</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <a href="mailto:aksadfjh@gmail.com" class="glass-card p-8 rounded-3xl flex flex-col items-center justify-center group hover:bg-blue-600/10">
+                        <div class="text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <span data-i18n="email_label" class="text-[10px] font-black tracking-widest text-slate-400 group-hover:text-white">EMAIL</span>
+                    </a>
+
+                    <a href="https://github.com/agrumestly" target="_blank" class="glass-card p-8 rounded-3xl flex flex-col items-center justify-center group hover:bg-white/10">
+                        <div class="text-white mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        </div>
+                        <span data-i18n="github_label" class="text-[10px] font-black tracking-widest text-slate-400 group-hover:text-white">GITHUB</span>
+                    </a>
+
+                    <a href="https://blog.agrumestly.top" class="glass-card p-8 rounded-3xl flex flex-col items-center justify-center group hover:bg-purple-600/10">
+                        <div class="text-purple-500 mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                        </div>
+                        <span data-i18n="blog_label" class="text-[10px] font-black tracking-widest text-slate-400 group-hover:text-white">MY BLOG</span>
+                    </a>
+
+                    <a href="https://x.com/agrumestly" class="glass-card p-8 rounded-3xl flex flex-col items-center justify-center group hover:bg-sky-500/10">
+                        <div class="text-sky-400 mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z"/></svg>
+                        </div>
+                        <span data-i18n="social_label" class="text-[10px] font-black tracking-widest text-slate-400 group-hover:text-white">SOCIAL</span>
+                    </a>
                 </div>
             </div>
         </section>

@@ -10,6 +10,12 @@ const translations = {
         'proj_1_desc': '日麻算点，一键掌握。',
         'proj_2_tag': '文字音乐播放器生成',
         'proj_2_desc': '输入歌名，生成适合发布在 Instagram 或 Twitter 的文本播放器。'
+        'contact_title': '联系<br><span class="text-blue-600">方式</span>',
+        'contact_subtitle': '探索我的数字足迹，或者直接给我发邮件。',
+        'email_label': '电子邮件',
+        'github_label': 'GITHUB',
+        'blog_label': '我的博客',
+        'social_label': '社交媒体'
     },
     'en': {
         'nav_blog': 'MY BLOG',
@@ -22,5 +28,11 @@ const translations = {
         'proj_1_desc': 'Japanese mahjong point calculation, master it with one click.',
         'proj_2_tag': 'Music Player to Text',
         'proj_2_desc': 'Enter the song title to generate a text player suitable for posting on Instagram or Twitter.'
+        'contact_title': 'GET IN<br><span class="text-blue-600">TOUCH</span>',
+        'contact_subtitle': 'Explore my digital footprint or reach out via email.',
+        'email_label': 'EMAIL',
+        'github_label': 'GITHUB',
+        'blog_label': 'BLOG',
+        'social_label': 'SOCIAL'
     }
 };
